@@ -1,0 +1,16 @@
+<input type="text" placeholder="Enter task" [(ngModel)]="newTask" />
+
+<label>Priority</label>
+<select [(ngModel)]="newPriority">
+  <option value="High">High</option>
+  <option value="Medium">Medium</option>
+  <option value="Low">Low</option>
+</select>
+
+<label>Status</label>
+<select [(ngModel)]="newStatus">
+  <option value="Pending">Pending</option>
+  <option value="In Progress">In Progress</option>
+  <option value="Completed">Completed</option>
+</select>
+<button (click)="addTask()">Add Task</button>

@@ -1,0 +1,26 @@
+<div *ngIf="!isEditing">
+  <h3>{{ task.title }}</h3>
+</div>
+
+<div *ngIf="isEditing">
+  <input type="text" [(ngModel)]="editedTitle" />
+  <button (click)="saveEdit()">Save</button>
+</div>
+
+<p>Priority:{{ task.priority }}</p>
+<p [class]="getStatusClass(task.status)">
+  Status:
+  {{ task.status }}
+</p>
+
+<button (click)="changeStatus('Pending')">Pending</button>
+
+<button (click)="changeStatus('In Progress')">In Progress</button>
+
+<button (click)="changeStatus('Completed')">Completed</button>
+
+<button (click)="deleteTask()">Delete</button>
+
+<button (click)="startEdit()">Edit</button>
+
+<hr />

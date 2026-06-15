@@ -1,0 +1,27 @@
+<h1>Dashboard</h1>
+<h2>Add Task</h2>
+
+<app-task-form (taskAdded)="handleTaskAdded($event)"> </app-task-form>
+<hr />
+
+<div *ngIf="isLoading">
+  <p>Loading tasks...</p>
+</div>
+
+<div *ngIf="!isLoading">
+  <input type="text" placeholder="Search task" [(ngModel)]="searchText" />
+  <button (click)="selectedStatus = 'All'">All</button>
+  <button (click)="selectedStatus = 'Pending'">Pending</button>
+  <button (click)="selectedStatus = 'In Progress'">In Progress</button>
+  <button (click)="selectedStatus = 'Completed'">Completed</button>
+
+  <h2>Task List</h2>
+
+  <app-task-list
+    [tasks]="filteredTasks()"
+    (statusUpdated)="handleStatusUpdate($event)"
+    (taskDeleted)="handleDeleteTask($event)"
+    (taskUpdated)="handleTaskUpdate($event)"
+  >
+  </app-task-list>
+</div>

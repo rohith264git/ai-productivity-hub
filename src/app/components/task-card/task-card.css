@@ -1,0 +1,14 @@
+.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.in-progress {
+  color: blue;
+  font-weight: bold;
+}
+
+.completed {
+  color: green;
+  font-weight: bold;
+}

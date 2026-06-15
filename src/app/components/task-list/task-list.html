@@ -1,0 +1,13 @@
+<div *ngIf="tasks.length === 0">
+  <p>No tasks available!!</p>
+</div>
+
+<div *ngFor="let task of tasks">
+  <app-task-card
+    [task]="task"
+    (statusChanged)="handleStatusChanged(task, $event)"
+    (deleteClicked)="handleDelete(task)"
+    (taskEdited)="handleTaskEdited(task, $event)"
+  >
+  </app-task-card>
+</div>
