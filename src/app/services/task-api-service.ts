@@ -1,81 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
 import { environment } from '../../environments/environment';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskApiService {
-
   private apiUrl = environment.apiUrl;
 
-  private mockTasks: Task[] = [
-    {
-      title: 'Complete Angular',
-      priority: 'High',
-      status: 'Pending'
-    },
-    {
-      title: 'Build Backend',
-      priority: 'Medium',
-      status: 'In Progress'
-    }
-  ];
-
-constructor(
-  private http: HttpClient
-) {}
+  constructor(private http: HttpClient) {}
 
   getBaseUrl() {
     return this.apiUrl;
   }
 
   fetchTasks(): Observable<Task[]> {
-
-    return of(this.mockTasks);
-
+    return this.http.get<Task[]>(this.getTasksEndpoint());
   }
 
-  createTask(title: string,priority: string,status: string) {
-  this.mockTasks.push({title,priority,status});
-}
+  createTask(title: string, priority: string, status: string) {
+    return this.http.post(this.getTasksEndpoint(), { title, priority, status });
+  }
 
-deleteTask(index: number) {
+  deleteTask(index: number) {
+    return this.http.delete(`${this.getTasksEndpoint()}/${index}`);
+  }
 
-  this.mockTasks.splice(index, 1);
+  updateTask(index: number, task: any) {
+    return this.http.put(`${this.getTasksEndpoint()}/${index}`, task);
+  }
 
-}
+  getTasksEndpoint() {
+    return `${this.apiUrl}${API_ENDPOINTS.tasks}`;
+  }
 
-updateTask(
-  index: number,
-  status: string
-) {
-
-  this.mockTasks[index].status = status;
-
-}
-
-getTasksEndpoint() {
-
-  return `${this.apiUrl}${API_ENDPOINTS.tasks}`;
-
-}
-
-testHttpClient() {
-
-  console.log(
-    'HttpClient Ready'
-  );
-
-}
-
-getLoginEndpoint() {
-
-  return `${this.apiUrl}${API_ENDPOINTS.login}`;
-
-}
-
+  getLoginEndpoint() {
+    return `${this.apiUrl}${API_ENDPOINTS.login}`;
+  }
 }

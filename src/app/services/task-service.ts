@@ -6,37 +6,30 @@ import { TaskApiService } from './task-api-service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class TaskService {
-  constructor(
-  private taskApiService: TaskApiService) {}
+  constructor(private taskApiService: TaskApiService) {}
 
-getTasks(): Observable<Task[]> {
-
-  return this.taskApiService.fetchTasks();
-
-}
+  getTasks(): Observable<Task[]> {
+    return this.taskApiService.fetchTasks();
+  }
 
   getApiBaseUrl() {
-  return this.taskApiService.getBaseUrl();
-}
+    return this.taskApiService.getBaseUrl();
+  }
 
-addTask(title: string,priority: string,status: string) {
-  this.taskApiService.createTask(title,priority,status);
-}
+  addTask(title: string, priority: string, status: string) {
+    return this.taskApiService.createTask(title, priority, status);
+  }
 
-deleteTask(index: number) {
-  this.taskApiService.deleteTask(index);
-}
+  deleteTask(index: number) {
+    return this.taskApiService.deleteTask(index);
+  }
 
-updateTaskStatus(index: number,status: string) {
-  this.taskApiService.updateTask(index,status);
-}
+  updateTaskStatus(index: number, task: any) {
+    return this.taskApiService.updateTask(index, task);
+  }
 
-getTasksEndpoint() {
-
-  return this.taskApiService.getTasksEndpoint();
-
-}
-
+  getTasksEndpoint() {
+    return this.taskApiService.getTasksEndpoint();
+  }
 }

@@ -22,11 +22,12 @@ export class Dashboard {
   constructor(public taskService: TaskService) {}
 
   ngOnInit() {
-console.log(
-  this.taskService.getTasksEndpoint()
-);
-    this.taskService.getTasks().subscribe((response) => {
-      this.tasks = response;
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
       this.isLoading = false;
     });
   }
@@ -40,16 +41,28 @@ console.log(
   }
 
   handleTaskAdded(task: any) {
-    this.taskService.addTask(task.title, task.priority, task.status);
+    this.taskService.addTask(task.title, task.priority, task.status).subscribe(() => {
+      this.loadTasks();
+    });
   }
 
   handleStatusUpdate(data: any) {
-    data.task.status = data.status;
+    const index = this.tasks.indexOf(data.task);
+    const updatedTask = {
+      ...data.task,
+      status: data.status,
+    };
+
+    this.taskService.updateTaskStatus(index, updatedTask).subscribe(() => {
+      this.loadTasks();
+    });
   }
 
   handleDeleteTask(task: any) {
     const index = this.tasks.indexOf(task);
-    this.taskService.deleteTask(index);
+    this.taskService.deleteTask(index).subscribe(() => {
+      this.loadTasks();
+    });
   }
 
   handleTaskUpdate(data: any) {
