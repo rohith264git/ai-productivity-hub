@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../models/task.model';
 import { Observable } from 'rxjs';
+import { Task } from '../models/task.model';
 import { TaskApiService } from './task-api-service';
 
 @Injectable({
@@ -21,12 +21,12 @@ export class TaskService {
     return this.taskApiService.createTask(title, priority, status);
   }
 
-  deleteTask(index: number) {
-    return this.taskApiService.deleteTask(index);
+  deleteTask(id: string) {
+    return this.taskApiService.deleteTask(id);
   }
 
-  updateTaskStatus(index: number, task: any) {
-    return this.taskApiService.updateTask(index, task);
+  updateTaskStatus(id: string, task: any) {
+    return this.taskApiService.updateTask(id, task);
   }
 
   getTasksEndpoint() {

@@ -22,15 +22,19 @@ export class TaskApiService {
   }
 
   createTask(title: string, priority: string, status: string) {
-    return this.http.post(this.getTasksEndpoint(), { title, priority, status });
+    return this.http.post(this.getTasksEndpoint(), {
+      title,
+      priority,
+      status,
+    });
   }
 
-  deleteTask(index: number) {
-    return this.http.delete(`${this.getTasksEndpoint()}/${index}`);
+  deleteTask(id: string) {
+    return this.http.delete(`${this.getTasksEndpoint()}/${id}`);
   }
 
-  updateTask(index: number, task: any) {
-    return this.http.put(`${this.getTasksEndpoint()}/${index}`, task);
+  updateTask(id: string, task: any) {
+    return this.http.put(`${this.getTasksEndpoint()}/${id}`, task);
   }
 
   getTasksEndpoint() {

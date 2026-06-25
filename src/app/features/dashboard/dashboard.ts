@@ -15,8 +15,11 @@ import { TaskList } from '../../components/task-list/task-list';
 })
 export class Dashboard {
   tasks: Task[] = [];
+
   isLoading = true;
+
   searchText = '';
+
   selectedStatus = 'All';
 
   constructor(public taskService: TaskService) {}
@@ -28,6 +31,7 @@ export class Dashboard {
   loadTasks() {
     this.taskService.getTasks().subscribe((tasks) => {
       this.tasks = tasks;
+
       this.isLoading = false;
     });
   }
@@ -35,7 +39,9 @@ export class Dashboard {
   filteredTasks() {
     return this.tasks.filter((task) => {
       const matchesSearch = task.title.toLowerCase().includes(this.searchText.toLowerCase());
+
       const matchesStatus = this.selectedStatus === 'All' || task.status === this.selectedStatus;
+
       return matchesSearch && matchesStatus;
     });
   }
@@ -47,20 +53,19 @@ export class Dashboard {
   }
 
   handleStatusUpdate(data: any) {
-    const index = this.tasks.indexOf(data.task);
     const updatedTask = {
       ...data.task,
+
       status: data.status,
     };
 
-    this.taskService.updateTaskStatus(index, updatedTask).subscribe(() => {
+    this.taskService.updateTaskStatus(data.task._id!, updatedTask).subscribe(() => {
       this.loadTasks();
     });
   }
 
   handleDeleteTask(task: any) {
-    const index = this.tasks.indexOf(task);
-    this.taskService.deleteTask(index).subscribe(() => {
+    this.taskService.deleteTask(task._id!).subscribe(() => {
       this.loadTasks();
     });
   }
