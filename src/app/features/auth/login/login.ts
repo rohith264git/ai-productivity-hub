@@ -28,7 +28,7 @@ export class Login {
 
       const password = this.loginForm.value.password ?? '';
 
-      this.authService.login(email, password).subscribe((response) => {
+      this.authService.login(email, password).subscribe((response : any) => {
         console.log(response);
 
         localStorage.setItem('token', response.token);
