@@ -5,6 +5,7 @@ import { TaskService } from '../../services/task-service';
 import { Task } from '../../models/task.model';
 import { TaskForm } from '../../components/task-form/task-form';
 import { TaskList } from '../../components/task-list/task-list';
+import { AiService } from '../../services/ai-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +16,16 @@ import { TaskList } from '../../components/task-list/task-list';
 })
 export class Dashboard {
   tasks: Task[] = [];
-
   isLoading = true;
-
   searchText = '';
-
   selectedStatus = 'All';
+  goal = '';
+  isGeneratingAI = false;
 
-  constructor(public taskService: TaskService) {}
+  constructor(
+    public taskService: TaskService,
+    private aiService: AiService,
+  ) {}
 
   ngOnInit() {
     this.loadTasks();
@@ -33,6 +36,31 @@ export class Dashboard {
       this.tasks = tasks;
 
       this.isLoading = false;
+    });
+  }
+
+  generateAITasks() {
+    if (!this.goal.trim()) {
+      alert('Please enter a goal.');
+      return;
+    }
+
+    this.isGeneratingAI = true;
+
+    this.aiService.generateTasks(this.goal).subscribe({
+      next: () => {
+        this.goal = '';
+        this.loadTasks();
+        this.isGeneratingAI = false;
+      },
+
+      error: (error) => {
+        console.error(error);
+
+        alert('Failed to generate AI tasks.');
+
+        this.isGeneratingAI = false;
+      },
     });
   }
 
