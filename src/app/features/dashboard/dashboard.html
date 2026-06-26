@@ -1,4 +1,13 @@
 <h1>Dashboard</h1>
+<h2>AI Task Generator</h2>
+
+<input type="text" placeholder="Enter your goal..." [(ngModel)]="goal" />
+
+<button (click)="generateAITasks()" [disabled]="isGeneratingAI">
+  {{ isGeneratingAI ? 'Generating...' : 'Generate AI Tasks' }}
+</button>
+
+<hr />
 <h2>Add Task</h2>
 
 <app-task-form (taskAdded)="handleTaskAdded($event)"> </app-task-form>
